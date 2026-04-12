@@ -1,0 +1,54 @@
+<script>
+(function () {
+  // Maps sequential index (0-based) → [h, v]
+  var slideMap = [];
+
+  function buildSlideMap() {
+    slideMap = [];
+    var hSlides = document.querySelectorAll('.reveal .slides > section');
+    hSlides.forEach(function (hSlide, h) {
+      var vSlides = hSlide.querySelectorAll(':scope > section');
+      if (vSlides.length === 0) {
+        slideMap.push([h, 0]);
+      } else {
+        vSlides.forEach(function (_, v) {
+          slideMap.push([h, v]);
+        });
+      }
+    });
+  }
+
+  function getLinearIndex() {
+    var s = Reveal.getState();
+    for (var i = 0; i < slideMap.length; i++) {
+      if (slideMap[i][0] === s.indexh && slideMap[i][1] === s.indexv) {
+        return i + 1; // 1-based
+      }
+    }
+    return 1;
+  }
+
+  function navigateToHash() {
+    var match = window.location.hash.match(/#\/(\d+)/);
+    if (!match) return;
+    var idx = parseInt(match[1], 10) - 1; // 0-based
+    var coords = slideMap[Math.max(0, Math.min(idx, slideMap.length - 1))];
+    if (coords) Reveal.slide(coords[0], coords[1]);
+  }
+
+  Reveal.on('ready', function () {
+    buildSlideMap();
+    // Restore slide from hash on load
+    if (window.location.hash) navigateToHash();
+    // Write initial hash
+    history.replaceState(null, null, '#/' + getLinearIndex());
+  });
+
+  Reveal.on('slidechanged', function () {
+    history.pushState(null, null, '#/' + getLinearIndex());
+  });
+
+  // Browser back / forward
+  window.addEventListener('popstate', navigateToHash);
+})();
+</script>

@@ -1,0 +1,218 @@
+// ============================================================
+// COLUMNS
+// ============================================================
+
+.reveal .columns {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5em;
+
+  .column {
+    flex: 1 1 0%;
+    min-width: 0;
+    background: rgba($ubw-gray-light, 0.3);
+    border-radius: 12px;
+    padding: 1em 1.2em;
+    border: 1px solid rgba($ubw-beige, 0.5);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// ============================================================
+// BLOCKQUOTES
+// ============================================================
+
+.reveal blockquote {
+  border-left: 4px solid $ubw-dark-blue;
+  background: linear-gradient(135deg, rgba($ubw-light-blue, 0.15), rgba($ubw-light-blue, 0.05));
+  padding: 0.8em 1.2em;
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+
+  &::before {
+    content: "\201C";
+    font-size: 3em;
+    color: rgba($ubw-dark-blue, 0.15);
+    position: absolute;
+    top: -0.1em;
+    left: 0.15em;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+
+  p {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ============================================================
+// TABLES
+// ============================================================
+
+.reveal table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin: 0.8em auto;
+
+  th {
+    background: linear-gradient(135deg, $ubw-dark-blue, darken($ubw-dark-blue, 8%));
+    color: white;
+    font-weight: 600;
+    padding: 0.6em 1em;
+    text-align: left;
+    font-size: 0.85em;
+    letter-spacing: 0.03em;
+  }
+
+  td {
+    padding: 0.5em 1em;
+    border-bottom: 1px solid rgba($ubw-beige, 0.5);
+    font-size: 0.85em;
+    transition: background 0.2s ease;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: rgba($ubw-light-blue, 0.15);
+  }
+
+  tbody tr:nth-child(even) td {
+    background: rgba($ubw-gray-light, 0.3);
+  }
+
+  tbody tr:nth-child(even):hover td {
+    background: rgba($ubw-light-blue, 0.2);
+  }
+}
+
+// ============================================================
+// CALLOUT BOXES (custom class)
+// ============================================================
+
+.callout-box {
+  border-radius: 12px;
+  padding: 0.8em 1.2em;
+  margin: 0.5em 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+  }
+
+  &.info {
+    background: rgba($ubw-light-blue, 0.2);
+    border: 1px solid rgba($ubw-light-blue, 0.5);
+
+    &::before {
+      background: $ubw-dark-blue;
+    }
+  }
+
+  &.warning {
+    background: rgba($ubw-gold, 0.15);
+    border: 1px solid rgba($ubw-gold, 0.4);
+
+    &::before {
+      background: $ubw-orange;
+    }
+  }
+
+  &.success {
+    background: rgba($ubw-green, 0.15);
+    border: 1px solid rgba($ubw-green, 0.4);
+
+    &::before {
+      background: $ubw-green;
+    }
+  }
+}
+
+// ============================================================
+// REFERENCES / BIBLIOGRAPHY
+// ============================================================
+
+#refs {
+  font-size: 0.55em;
+  line-height: 1.5;
+  column-gap: 2em;
+
+  div {
+    break-inside: avoid;
+    margin-bottom: 0.5em;
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+    color: $ubw-text;
+  }
+}
+
+// Auto second column only when needed (>4 entries)
+#refs:has(div:nth-child(5)) {
+  columns: 2;
+}
+
+// Copyright notice after references — small and unobtrusive, pinned near footer
+#refs~.callout-box {
+  font-size: 0.38em;
+  padding: 0.4em 0.8em;
+  position: absolute;
+  bottom: 60px;
+  left: 5%;
+  right: 5%;
+  opacity: 0.55;
+  border-radius: 6px;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+// ============================================================
+// LINKS
+// ============================================================
+
+.reveal a {
+  color: $ubw-dark-blue;
+  text-decoration: none;
+  border-bottom: 2px solid rgba($ubw-orange, 0.3);
+  transition: border-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    color: $ubw-orange;
+    border-bottom-color: $ubw-orange;
+  }
+}
+
+// ============================================================
+// IMAGES
+// ============================================================
+
+.reveal section img {
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+}

@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.43.0
+    hooks:
+      - id: markdownlint
+        name: Lint Markdown / QMD files
+        files: \.(md|qmd)$
+        args: ["--config", ".markdownlint.json"]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.(html|svg)$
+      - id: end-of-file-fixer
+        exclude: \.(html|svg|pdf)$
+      - id: check-merge-conflict
+      - id: check-yaml

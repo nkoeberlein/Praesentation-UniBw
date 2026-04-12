@@ -1,0 +1,13 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "selector-class-pattern": null,
+    "no-descending-specificity": null,
+    "scss/dollar-variable-pattern": null,
+    "import-notation": null,
+    "scss/at-import-no-partial-leading-underscore": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "no-duplicate-selectors": true
+  }
+}

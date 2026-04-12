@@ -1,0 +1,18 @@
+# Quarto build artifacts
+/.quarto/
+/presentation-UniBw_files/
+/presentation-UniBw.html
+*.pdf
+!assets/*.pdf
+
+# Graphify analysis output
+/graphify-out/
+
+# IDE artifacts
+/.DS_Store
+/.vscode/
+/.idea/
+
+# Notebook artifacts
+/.ipynb_checkpoints/
+**/*.quarto_ipynb

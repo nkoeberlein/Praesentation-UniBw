@@ -1,0 +1,43 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Design © 2026 Nikolaus Köberlein (github.com/nkoeberlein). Assets excluded.
+ */
+
+/*-- scss:defaults --*/
+
+// UniBw Color Scheme
+$ubw-dark-blue: #2A3D7A;
+$ubw-title-blue: #1F2E5C;
+$ubw-text: #5B5249;
+$ubw-orange: #FF7E1D;
+$ubw-beige: #CEC8BA;
+$ubw-light-blue: #C9DDF1;
+$ubw-gold: #FAC164;
+$ubw-green: #C3E684;
+$ubw-gray-light: #E6E7E8;
+$ubw-gray-mid: #BABBBF;
+
+// Reveal.js theme variables
+$font-family-sans-serif: "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$presentation-heading-font: "Calibri Light", "Calibri", "Segoe UI Light", "Helvetica Neue", Arial, sans-serif;
+$presentation-heading-color: $ubw-title-blue;
+$body-color: $ubw-text;
+$link-color: $ubw-dark-blue;
+$presentation-heading-font-weight: 700;
+$body-bg: #ffffff;
+
+$presentation-font-size-root: 51px;
+$presentation-h1-font-size: 1.7em;
+$presentation-h2-font-size: 1.25em;
+$presentation-h3-font-size: 1.0em;
+
+/*-- scss:rules --*/
+
+@import "animations";   // Keyframe animations
+@import "slides";       // Global slide layout, title slide, section dividers
+@import "chrome";       // Header bar, footer bar, progress bar, fragments
+@import "typography";   // Headings, lists, code blocks
+@import "elements";     // Columns, blockquotes, tables, callouts, refs, links, images
+@import "end-slide";    // End/thank-you slide, auto-animate, notes, print

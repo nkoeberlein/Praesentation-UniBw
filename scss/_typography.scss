@@ -1,0 +1,139 @@
+// ============================================================
+// TYPOGRAPHY & HEADINGS
+// ============================================================
+
+.reveal h2 {
+  color: $ubw-title-blue;
+  border-bottom: none;
+  padding-bottom: 0.15em;
+  margin-bottom: 0.5em;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: $ubw-orange;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+}
+
+// Center-aligned slides get centered underline
+.reveal section.center h2::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.reveal h3 {
+  color: $ubw-dark-blue;
+  font-weight: 600;
+}
+
+// ============================================================
+// LISTS — staggered entrance & custom bullets
+// ============================================================
+
+.reveal ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+
+  >li {
+    padding-left: 1.3em;
+    position: relative;
+    margin-bottom: 0.4em;
+    line-height: 1.5;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      background: $ubw-orange;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    &:hover::before {
+      background: $ubw-dark-blue;
+      transform: rotate(45deg) scale(1.2);
+    }
+
+    // Nested lists
+    >ul>li {
+      &::before {
+        width: 6px;
+        height: 6px;
+        background: $ubw-light-blue;
+        border: 2px solid $ubw-dark-blue;
+        border-radius: 50%;
+        transform: none;
+      }
+
+      &:hover::before {
+        background: $ubw-dark-blue;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.reveal ol {
+  margin-left: 0.5em;
+
+  >li {
+    margin-bottom: 0.4em;
+    line-height: 1.5;
+    padding-left: 0.3em;
+
+    &::marker {
+      color: $ubw-orange;
+      font-weight: 700;
+    }
+  }
+}
+
+// ============================================================
+// CODE BLOCKS
+// ============================================================
+
+.reveal pre {
+  border-left: 4px solid $ubw-orange;
+  border-radius: 0 8px 8px 0;
+  background: #f8f9fa;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  margin: 0.8em 0;
+
+  code {
+    padding: 1em 1.2em;
+    font-size: 0.8em;
+    line-height: 1.7;
+    border-radius: 0 8px 8px 0;
+    color: #2d2d2d;
+    background: #f8f9fa;
+  }
+}
+
+// Highlighted lines
+.reveal pre code .highlight-line,
+.reveal pre code mark {
+  background: rgba($ubw-orange, 0.12);
+  border-left: 3px solid $ubw-orange;
+  margin-left: -1.2em;
+  padding-left: calc(1.2em - 3px);
+  display: block;
+}
+
+// Line numbers
+.reveal pre code .code-line-number {
+  color: $ubw-gray-mid;
+  margin-right: 1em;
+}
