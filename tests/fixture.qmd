@@ -82,6 +82,14 @@ line_26 = compute(value, other=26)
 :::
 :::
 
+## Kleinere Schrift, gleicher Titel {#smaller-title .smaller}
+
+Mit `.smaller` wird der Inhalt kleiner, der Folientitel bleibt so groß wie auf allen anderen Folien.
+
+::: {.callout-box .info}
+Zwischen den Blöcken steht genau ein Abstand.
+:::
+
 ## Spalten 25/50/25 {#columns-25-50-25}
 
 ::: {.columns}

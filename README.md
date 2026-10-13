@@ -57,7 +57,7 @@ Browser-Konsole gemeldet. Dann die Folie teilen oder kürzen.
 
 | Schlüssel | Standard | Wirkung |
 |---|---|---|
-| `ubw-density` | `normal` | `compact`, `dense` oder Zahl (z. B. `0.9`): Schriftgröße aller Inhaltsfolien |
+| `ubw-density` | `normal` | `compact`, `dense` oder Zahl (z. B. `0.9`): Schriftgröße des Inhalts aller Folien; Folientitel bleiben gleich groß |
 | `ubw-animations` | `true` | `false` schaltet die Einblend-Animationen ab |
 | `profile-photo` | – | Bild für die Abschlussfolie |
 | `end-slide` / `end-title` | `true` / „Vielen Dank — Fragen?" | Abschlussfolie aus- bzw. umbenennen |

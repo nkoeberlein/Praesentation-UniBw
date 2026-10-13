@@ -36,6 +36,7 @@ const PROBE = `(function () {
     if (all[i] === slide) break;
   }
 
+  var h2 = slide.querySelector(':scope > h2, :scope > nav > h2');
   var titleEl = header && header.querySelector('.ubw-header-title');
   var numEl = footer && footer.querySelector('.ubw-footer-num');
   var dateEl = footer && footer.querySelector('.ubw-footer-date');
@@ -46,6 +47,7 @@ const PROBE = `(function () {
     scrollHeight: slide.scrollHeight,
     transform: slide.style.transform || '',
     fontSize: getComputedStyle(slide).fontSize,
+    titleSize: h2 && h2.textContent.trim() ? parseFloat(getComputedStyle(h2).fontSize) : null,
     fit: slide.getAttribute('data-ubw-fit'),
     overflow: slide.hasAttribute('data-ubw-overflow'),
     headerShown: shown(header),

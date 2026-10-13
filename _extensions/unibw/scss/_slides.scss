@@ -33,7 +33,7 @@
 
 .reveal .slides section#TOC {
   nav>h2 {
-    font-size: calc(#{$presentation-h2-font-size} / var(--ubw-fit, 1));
+    font-size: calc(#{$presentation-h2-font-size} / (var(--ubw-density, 1) * var(--ubw-fit, 1)));
   }
 
   // Second column from the sixth section on

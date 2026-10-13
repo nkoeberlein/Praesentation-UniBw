@@ -29,6 +29,10 @@ SCSS theme of the format. Entry point is `ubw-theme.scss`, referenced in `_exten
   Inside slides use `em`, so density and auto-fit can scale the content.
 - Font size of a content slide = root × `--ubw-density` × `--ubw-fit`. `.smaller` only sets
   `--ubw-density: 0.7`; the JS in `includes/auto-fit.html` sets `--ubw-fit`.
+  The slide title (`h2`) divides both factors out again, so titles have one size across the deck.
+- Vertical spacing between the blocks of a slide is the `gap` of the flex column (`_layout.scss`).
+  Top and bottom margins of direct children are reset to 0 there, because margins of flex items do not
+  collapse and would add up.
 
 ## Gotchas
 

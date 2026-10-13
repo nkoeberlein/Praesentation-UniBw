@@ -72,6 +72,15 @@ export function checkDeck(report, { date, expectOverflow = [], expectFit = [] } 
     }
   }
 
+  // Slide titles have one size, whatever density, .smaller and auto-fit do
+  const titled = report.slides.filter((s) => CONTENT(s) && s.titleSize !== null);
+  const sizes = [...new Set(titled.map((s) => Math.round(s.titleSize)))];
+  if (sizes.length > 1) {
+    const reference = Math.round(titled[0].titleSize);
+    titled.filter((s) => Math.round(s.titleSize) !== reference)
+      .forEach((s) => fail(s, 'Folientitel ' + s.titleSize.toFixed(1) + ' px statt ' + reference + ' px'));
+  }
+
   const endSlides = report.slides.filter((s) => /\bend-slide\b/.test(s.classes));
   if (endSlides.length > 1) problems.push(endSlides.length + ' Abschlussfolien statt höchstens einer');
 

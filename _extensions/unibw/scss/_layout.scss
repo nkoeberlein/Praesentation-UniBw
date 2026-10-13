@@ -16,20 +16,32 @@
   // --ubw-fit:     set per slide by includes/auto-fit.html
   font-size: calc(1em * var(--ubw-density, 1) * var(--ubw-fit, 1));
 
+  // Vertical rhythm: one gap between blocks. Margins of flex items do not
+  // collapse — left in place they would add up and waste a line per block.
+  gap: 0.6em;
+
   // Blocks keep their natural height. Too much content is handled by
   // auto-fit, never by squeezing single blocks.
   >* {
     flex: 0 0 auto;
     min-width: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  // Pushed to the bottom of the slide (see _elements.scss)
+  >.slide-source {
+    margin-top: auto;
   }
 
   >table {
     align-self: center;
   }
 
-  // Slide titles keep one size across the deck, whatever auto-fit does
+  // Slide titles keep one size across the deck, whatever density, `.smaller`
+  // and auto-fit do to the content
   >h2 {
-    font-size: calc(#{$presentation-h2-font-size} / var(--ubw-fit, 1));
+    font-size: calc(#{$presentation-h2-font-size} / (var(--ubw-density, 1) * var(--ubw-fit, 1)));
   }
 
   &.smaller {

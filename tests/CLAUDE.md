@@ -26,6 +26,7 @@ node tests/check-slides.mjs demo.html --date 01.04.2026
 - No slide is flagged as overflowing, except ids passed with `--expect-overflow`; ids passed with
   `--expect-fit` must have been shrunk.
 - Columns have the widths declared in Markdown (±3 percentage points).
+- Slide titles have the same size on every content slide (also with `.smaller`, density, auto-fit).
 - Header shows the section of the slide, also after a deep link; footer shows `n / total` and the date.
 - At most one end slide.
 
