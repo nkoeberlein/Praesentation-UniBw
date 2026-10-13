@@ -1,0 +1,100 @@
+// ============================================================
+// CONTENT SLIDE BOX MODEL
+// ============================================================
+// A content slide always fills the canvas. Its padding reserves the space of
+// header and footer, the rest is a flex column for the slide's blocks.
+
+#{$ubw-content} {
+  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+  padding: ($ubw-header-height + $ubw-gap-top) $ubw-side-padding ($ubw-footer-height + $ubw-gap-bottom);
+  overflow: hidden;
+
+  // --ubw-density: deck-wide (YAML `ubw-density`) or per slide (`.smaller`)
+  // --ubw-fit:     set per slide by includes/auto-fit.html
+  font-size: calc(1em * var(--ubw-density, 1) * var(--ubw-fit, 1));
+
+  // Blocks keep their natural height. Too much content is handled by
+  // auto-fit, never by squeezing single blocks.
+  >* {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  >table {
+    align-self: center;
+  }
+
+  // Slide titles keep one size across the deck, whatever auto-fit does
+  >h2 {
+    font-size: calc(#{$presentation-h2-font-size} / var(--ubw-fit, 1));
+  }
+
+  &.smaller {
+    --ubw-density: 0.7;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  // Images/blocks marked to fill the remaining height (Quarto adds
+  // `.r-stretch` to a lone image automatically)
+  >.r-stretch {
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto !important;
+  }
+
+  >img.r-stretch,
+  >video.r-stretch {
+    width: auto !important;
+    max-width: 100%;
+    object-fit: contain;
+    align-self: center;
+  }
+}
+
+// ============================================================
+// DENSITY
+// ============================================================
+
+.reveal.ubw-density-compact {
+  --ubw-density: 0.82;
+}
+
+.reveal.ubw-density-dense {
+  --ubw-density: 0.7;
+}
+
+// ============================================================
+// AUTO-FIT
+// ============================================================
+
+// Entrance animations move blocks and would distort the measurement
+.reveal.ubw-measuring .slides section * {
+  animation: none !important;
+}
+
+// Slide still overflows at the smallest step. Only shown while authoring
+// (class is set on localhost or with ?ubw-debug).
+.reveal.ubw-debug .slides section[data-ubw-overflow] {
+  outline: 6px dashed #d00000;
+  outline-offset: -6px;
+
+  &::before {
+    content: attr(data-ubw-overflow);
+    position: absolute;
+    top: $ubw-header-height + 10px;
+    right: 16px;
+    z-index: 30;
+    padding: 4px 14px;
+    border-radius: 4px;
+    background: #d00000;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+  }
+}

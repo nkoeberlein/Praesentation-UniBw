@@ -1,0 +1,51 @@
+// ============================================================
+// PDF EXPORT (?print-pdf in Chrome)
+// ============================================================
+// Revealjs moves every slide into its own `.pdf-page` and resets padding,
+// display and position with `!important`. The rules below restore the box
+// model of this theme; header/footer copies per page come from
+// includes/header-footer.html.
+
+html.reveal-print {
+
+  // The single overlay is replaced by one copy per page
+  .ubw-chrome {
+    display: none;
+  }
+
+  .pdf-page>.ubw-header,
+  .pdf-page>.ubw-footer {
+    z-index: 5;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  #{$ubw-content} {
+    display: flex !important;
+    height: 100% !important;
+    padding: ($ubw-header-height + $ubw-gap-top) $ubw-side-padding ($ubw-footer-height + $ubw-gap-bottom) !important;
+  }
+
+  .reveal .slides section#title-slide,
+  .reveal .slides section.title-slide {
+    left: 4% !important;
+    width: 92% !important;
+    padding: 0 0 82px !important;
+  }
+
+  .reveal .slides section.title-slide.level1 {
+    display: flex !important;
+    padding: 0 1.2em !important;
+  }
+
+  .reveal .slides section.end-slide {
+    display: flex !important;
+    height: 100% !important;
+    padding: 0 $ubw-side-padding $ubw-footer-height !important;
+  }
+
+  .reveal .slides section,
+  .reveal .slides section * {
+    animation: none !important;
+  }
+}

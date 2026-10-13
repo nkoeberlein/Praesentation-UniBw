@@ -1,4 +1,25 @@
 // ============================================================
+// CHROME CANVAS
+// ============================================================
+// Same size and scale as Revealjs's `.slides` element (size and --ubw-scale
+// are set by includes/header-footer.html), so header and footer always sit
+// exactly on the slide — independent of window size. All sizes below are px
+// on that canvas.
+
+.ubw-chrome {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  transform: translate(-50%, -50%) scale(var(--ubw-scale, 1));
+  pointer-events: none;
+
+  >* {
+    pointer-events: auto;
+  }
+}
+
+// ============================================================
 // CUSTOM HEADER BAR
 // ============================================================
 
@@ -7,11 +28,12 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 20;
+  box-sizing: border-box;
+  height: $ubw-header-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2em 1.2em;
+  padding: 0 60px;
   background: linear-gradient(to right,
       rgba($ubw-gray-mid, 0.6),
       rgba($ubw-gray-light, 0.4),
@@ -39,9 +61,9 @@
     }
 
     .ubw-header-prof {
-      font-size: 0.28em;
+      font-size: 14px;
       color: $ubw-dark-blue;
-      margin-top: 0.05em;
+      margin-top: 2px;
       white-space: nowrap;
       font-weight: 600;
       letter-spacing: 0.03em;
@@ -51,7 +73,7 @@
   .ubw-header-title {
     flex: 1;
     text-align: center;
-    font-size: 0.5em;
+    font-size: 26px;
     font-weight: 700;
     color: $ubw-dark-blue;
     font-family: $presentation-heading-font;
@@ -91,13 +113,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 1.4em;
+  box-sizing: border-box;
+  height: $ubw-footer-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
   // Left padding keeps the author clear of Quarto's menu button
-  padding: 0 1.2em 0 3.6em;
-  font-size: 0.36em;
+  padding: 0 22px 0 64px;
+  font-size: 18px;
   color: $ubw-text;
   border-top: 2px solid $ubw-orange;
   background: linear-gradient(to right,
@@ -105,7 +128,6 @@
       rgba(255, 255, 255, 0.95));
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 20;
   transition: opacity 0.4s ease;
 
   .ubw-footer-sep {
@@ -126,13 +148,6 @@
     font-style: italic;
     color: $ubw-dark-blue;
     opacity: 0.8;
-  }
-
-  .ubw-footer-license {
-    font-size: 0.85em;
-    color: $ubw-dark-blue;
-    opacity: 0.7;
-    margin-left: 2em;
   }
 
   .ubw-footer-num {

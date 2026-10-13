@@ -3,6 +3,10 @@
 // ============================================================
 
 .reveal .slides section.end-slide {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 $ubw-side-padding $ubw-footer-height;
+  font-size: 1.12em;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -154,25 +158,4 @@
 
 .reveal aside.notes {
   display: none;
-}
-
-// ============================================================
-// PRINT / PDF EXPORT
-// ============================================================
-
-@media print {
-
-  .ubw-header,
-  .ubw-footer {
-    position: fixed !important;
-    z-index: 9999 !important;
-  }
-
-  .reveal .slides section {
-    animation: none !important;
-
-    * {
-      animation: none !important;
-    }
-  }
 }

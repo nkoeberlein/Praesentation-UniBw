@@ -2,36 +2,25 @@
 // GLOBAL SLIDE STYLING
 // ============================================================
 
-.reveal .slides section {
-  padding-top: 3.4em;
-  padding-bottom: 1.6em;
-  overflow: hidden;
-
-  &.smaller {
-    padding-top: 170px;
-  }
-}
-
 // Ensure slide backgrounds (like section dividers) are solid and have no radial gradients
 .reveal .backgrounds .slide-background {
   background-image: none !important;
 }
 
-// Visible slide content entrance animation
-.reveal .slides section.present {
-  h2 {
+// Entrance animation of the visible slide. Off with YAML `ubw-animations: false`
+// and on auto-animate slides, where it would fight Revealjs's own morphing.
+.reveal:not(.ubw-no-anim) .slides section.present:not([data-auto-animate]) {
+  >h2 {
     animation: fadeInLeft 0.6s ease-out both;
   }
 
   >ul,
   >ol,
   >p,
-  >div:not(.ubw-header):not(.ubw-footer),
-  >.columns,
+  >div,
   >pre,
   >table,
-  >blockquote,
-  >.callout-box {
+  >blockquote {
     animation: fadeInUp 0.5s ease-out both;
     animation-delay: 0.15s;
   }
@@ -47,12 +36,18 @@
 }
 
 // ============================================================
-// TITLE SLIDE
+// TITLE SLIDE + SECTION DIVIDERS — shared white band
 // ============================================================
+// Pandoc gives H1 dividers the class `title-slide` too, so both share the
+// band. Everything specific is scoped to `#title-slide` or `.level1` below.
 
-.reveal .slides>section:first-child,
+.reveal .slides section#title-slide,
 .reveal .slides section.title-slide {
-  padding-top: 0;
+  box-sizing: border-box;
+  left: 4%;
+  width: 92%;
+  padding: 0 0 82px;
+  font-size: 1.12em;
   text-align: center;
   background: #ffffff;
 
@@ -139,29 +134,6 @@
     animation: fadeInUp 0.8s ease-out 0.8s both;
   }
 
-  .institute {
-    opacity: 0.75;
-  }
-
-  // Extra metadata injected by JS
-  .title-meta {
-    animation: fadeInUp 0.8s ease-out 0.8s both;
-    margin-top: 0.8em;
-
-    .title-course {
-      font-size: 0.6em;
-      color: $ubw-dark-blue;
-      font-weight: 600;
-      margin-bottom: 0.3em;
-    }
-
-    .title-institution {
-      font-size: 0.5em;
-      color: $ubw-text;
-      opacity: 0.75;
-      line-height: 1.5;
-    }
-  }
 }
 
 // ============================================================
@@ -169,24 +141,16 @@
 // ============================================================
 
 // H1-based section dividers
-.reveal .slides section[data-background-color] {
+.reveal .slides section.title-slide.level1 {
   display: flex !important;
   align-items: center;
-  justify-content: flex-start !important;
-  padding: 0;
+  justify-content: flex-start;
+  padding: 0 1.2em;
+  text-align: left;
 
   h1 {
-    color: $ubw-title-blue !important;
-    font-size: 2em;
+    margin: 0.4em 0;
     letter-spacing: 0.02em;
     text-shadow: none;
-    text-align: center;
-    background: none;
-    box-shadow: none;
-    border: none;
-
-    &::after {
-      display: none;
-    }
   }
 }

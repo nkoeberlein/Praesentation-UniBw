@@ -1,0 +1,86 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  Design © 2026 Nikolaus Köberlein (github.com/nkoeberlein). Assets excluded.
+-->
+<script>
+(function () {
+  // Font-size factors tried in order until the content fits the slide.
+  // The factor ends up in --ubw-fit, which scss/_layout.scss multiplies into
+  // the slide's font size — text reflows, nothing is scaled by transform.
+  var STEPS = [1, 0.93, 0.86, 0.8, 0.74, 0.68, 0.62, 0.56];
+  var CONTENT = 'section.slide:not(.title-slide):not(.end-slide):not(.no-fit)';
+  var OVERFLOW_LABEL = 'Inhalt passt nicht – Folie teilen oder kürzen';
+
+  function overflows(slide) {
+    return slide.scrollHeight > slide.clientHeight + 1 || slide.scrollWidth > slide.clientWidth + 1;
+  }
+
+  // Slides far from the current one sit in a hidden stack and have no layout.
+  // Show the stack for the duration of the measurement.
+  function withLayout(slide, fn) {
+    var stack = slide.parentElement;
+    var hidden = stack && stack.tagName === 'SECTION' && getComputedStyle(stack).display === 'none';
+    var before = hidden ? stack.style.display : null;
+    if (hidden) stack.style.display = 'block';
+    try {
+      return fn();
+    } finally {
+      if (hidden) stack.style.display = before;
+    }
+  }
+
+  function fitSlide(slide) {
+    if (!slide.matches(CONTENT)) return;
+    withLayout(slide, function () {
+      var fits = false;
+      var step = STEPS[0];
+      for (var i = 0; i < STEPS.length && !fits; i++) {
+        step = STEPS[i];
+        slide.style.setProperty('--ubw-fit', step);
+        fits = !overflows(slide);
+      }
+      slide.setAttribute('data-ubw-fit', step);
+      if (fits) {
+        slide.removeAttribute('data-ubw-overflow');
+      } else {
+        slide.setAttribute('data-ubw-overflow', OVERFLOW_LABEL);
+        console.warn('[ubw] Folie ' + (Reveal.getSlides().indexOf(slide) + 1) +
+          ' (' + (slide.id || 'ohne Titel') + '): ' + OVERFLOW_LABEL);
+      }
+    });
+  }
+
+  function fitAll(slides) {
+    var root = Reveal.getRevealElement();
+    root.classList.add('ubw-measuring');
+    Array.prototype.forEach.call(slides || Reveal.getSlides(), fitSlide);
+    root.classList.remove('ubw-measuring');
+  }
+
+  function init() {
+    var root = Reveal.getRevealElement();
+    var authoring = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) || /[?&]ubw-debug/.test(location.search);
+    if (authoring) root.classList.add('ubw-debug');
+
+    fitAll();
+
+    // Late layout changes: web fonts, images without fixed size
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitAll(); });
+    Array.prototype.forEach.call(root.querySelectorAll('.slides img'), function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', function () {
+        var slide = img.closest('section');
+        if (slide) fitAll([slide]);
+      });
+    });
+
+    // In the print view every slide has been moved into its own page
+    Reveal.on('pdf-ready', function () { fitAll(); });
+  }
+
+  if (Reveal.isReady()) init();
+  else Reveal.on('ready', init);
+})();
+</script>

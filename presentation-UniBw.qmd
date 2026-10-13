@@ -13,7 +13,7 @@ position: "Wissenschaftlicher Mitarbeiter" #optional
 expertise: "Machine Learning, Software Engineering, Datenanalyse" #optional
 student-id: "12345678" #optional
 cohort: "MINF26" #optional
-email: "[EMAIL_ADDRESS]" #optional
+email: "vorname.nachname@unibw.de" #optional
 profile-website: "https://www.unibw.de" #optional
 
 course-name: ""
@@ -30,12 +30,17 @@ date: 2026-04-01   # ISO-Format JJJJ-MM-TT (oder today); Anzeige als TT.MM.JJJJ
 
 date-format: "DD.MM.YYYY"
 lang: de
+
+ubw-density: normal     # normal | compact | dense | Zahl (z. B. 0.9) – Schriftgröße aller Inhaltsfolien
+ubw-animations: "true"  # "false" = keine Einblend-Animationen
+
 format:
   revealjs:
     theme: [default, scss/ubw-theme.scss]
     slide-number: true
     include-after-body:
       - includes/header-footer.html
+      - includes/auto-fit.html
       - includes/sequential-hash.html
     preview-links: auto
     transition: slide
@@ -43,7 +48,8 @@ format:
     background-transition: none
     width: 1920
     height: 1080
-    margin: 0.08
+    margin: 0
+    pdf-max-pages-per-slide: 1
     center: false
     hash: false
     history: false
@@ -78,6 +84,8 @@ format:
       <meta name="professor" content="{{< meta professor >}}">
       <meta name="study-program" content="{{< meta study-program >}}">
       <meta name="date" content="{{< meta date >}}">
+      <meta name="ubw-density" content="{{< meta ubw-density >}}">
+      <meta name="ubw-animations" content="{{< meta ubw-animations >}}">
 bibliography: bibliography/references.bib
 csl: https://www.zotero.org/styles/ieee
 cite-method: citeproc

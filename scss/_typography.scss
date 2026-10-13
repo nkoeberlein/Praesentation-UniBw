@@ -122,14 +122,19 @@
   }
 }
 
-// Highlighted lines
-.reveal pre code .highlight-line,
-.reveal pre code mark {
+// A code block is never cut off or scrolled inside the slide: it grows, and
+// auto-fit shrinks the whole slide if it gets too tall.
+#{$ubw-content} pre code {
+  max-height: none;
+}
+
+// Highlighted lines. Each line is an inline-block span followed by a line
+// break, so it must stay inline-block — `display: block` doubles the spacing.
+.reveal pre code .highlight-line {
+  display: inline-block;
+  width: 100%;
   background: rgba($ubw-orange, 0.12);
-  border-left: 3px solid $ubw-orange;
-  margin-left: -1.2em;
-  padding-left: calc(1.2em - 3px);
-  display: block;
+  box-shadow: inset 3px 0 0 $ubw-orange;
 }
 
 // Line numbers

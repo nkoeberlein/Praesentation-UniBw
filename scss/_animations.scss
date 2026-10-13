@@ -50,28 +50,6 @@
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes pulseGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba($ubw-orange, 0.4);
-  }
-
-  50% {
-    box-shadow: 0 0 20px 4px rgba($ubw-orange, 0.15);
-  }
-}
-
 @keyframes slideInLine {
   from {
     transform: scaleX(0);
