@@ -10,6 +10,11 @@
     return el ? el.content : '';
   }
 
+  // Returns an element only if it has content, so unset YAML fields leave no gap.
+  function line(tag, cls, text) {
+    return text ? '<' + tag + ' class="' + cls + '">' + text + '</' + tag + '>' : '';
+  }
+
   function initUbwHeaderFooter() {
     // --- Remove Quarto defaults ---
     var oldFooter = document.querySelector('.footer');
@@ -77,12 +82,12 @@
       content.classList.add('title-content');
       content.innerHTML =
         '<h1 class="title">' + title + '</h1>' +
-        '<p class="subtitle">' + getMeta('subtitle') + '</p>' +
-        '<p class="title-author">' + (authorTitle ? authorTitle + ' ' : '') + author + '</p>' +
-        '<p class="title-cohort">Jahrgang ' + cohort + '</p>' +
-        '<p class="title-date">' + date + '</p>' +
-        '<div class="title-course">' + (courseName && courseInstructor ? courseName + ' &mdash; ' + courseInstructor : courseName || courseInstructor) + '</div>' +
-        '<p class="title-program">' + studyProgram + '</p>';
+        line('p', 'subtitle', getMeta('subtitle')) +
+        line('p', 'title-author', (authorTitle ? authorTitle + ' ' : '') + author) +
+        line('p', 'title-cohort', cohort ? 'Jahrgang ' + cohort : '') +
+        line('p', 'title-date', date) +
+        line('div', 'title-course', courseName && courseInstructor ? courseName + ' &mdash; ' + courseInstructor : courseName || courseInstructor) +
+        line('p', 'title-program', studyProgram);
       titleSlide.appendChild(content);
     }
 
@@ -121,7 +126,7 @@
         html += '<p class="steck-org">' + org + '</p>';
       }
 
-      if (email && email !== '[EMAIL_ADDRESS]') {
+      if (email) {
         html += '<p class="steck-contact">' + email + '</p>';
       }
 
@@ -145,8 +150,13 @@
       steckbrief.innerHTML = html;
     }
 
-    // --- Track last known H1 section name ---
-    var lastSectionName = '';
+    // --- Give every slide the title of the section (H1) it belongs to ---
+    var sectionName = '';
+    Reveal.getSlides().forEach(function (s) {
+      var h1 = s === titleSlide ? null : s.querySelector(':scope > h1');
+      if (h1) sectionName = h1.textContent.trim();
+      s.setAttribute('data-ubw-section', sectionName);
+    });
 
     // --- Visibility: hide header/footer on special slides ---
     function updateChrome() {
@@ -163,12 +173,10 @@
       footer.style.opacity = isTitle ? '0' : '1';
       footer.style.pointerEvents = isTitle ? 'none' : 'auto';
 
-      // Update header with section title (H1) — remember last seen
+      // Update header with the title of the slide's section
       var headerTitle = header.querySelector('.ubw-header-title');
       if (headerTitle) {
-        var h1 = slide.querySelector('h1');
-        if (h1) lastSectionName = h1.textContent;
-        headerTitle.textContent = lastSectionName;
+        headerTitle.textContent = slide.getAttribute('data-ubw-section') || '';
       }
 
       // Update slide number in footer

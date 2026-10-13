@@ -50,12 +50,6 @@
       border: 4px solid $ubw-orange;
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
       animation: scaleIn 0.7s ease-out 0.4s both;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-      &:hover {
-        transform: none;
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
-      }
     }
   }
 

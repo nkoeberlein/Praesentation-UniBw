@@ -26,9 +26,10 @@ institute: "INF4 - Angewandte Informatik"
 chair: "Professur für Softwarewerkzeuge und Methoden für integrierte Anwendungen"
 professor: "Univ.-Professor Dr.-Ing. Andreas Karcher"
 
-date: 01.04.2026   # oder today
+date: 2026-04-01   # ISO-Format JJJJ-MM-TT (oder today); Anzeige als TT.MM.JJJJ
 
 date-format: "DD.MM.YYYY"
+lang: de
 format:
   revealjs:
     theme: [default, scss/ubw-theme.scss]
@@ -298,7 +299,7 @@ Dieses Foliendesign wurde von **Nikolaus Köberlein** ([github.com/nkoeberlein](
 :::: {.columns .end-columns}
 ::: {.column width="30%"}
 ::: {.profile-photo}
-![](assets/profilfoto.png)
+![](assets/profilfoto.jpg)
 :::
 :::
 

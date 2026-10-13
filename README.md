@@ -39,11 +39,9 @@ quarto preview presentation-UniBw.qmd
 
 ### PDF-Export
 
-Du kannst die Präsentation auch als PDF exportieren, indem du entweder in der Browser-Vorschau `?print-pdf` an die URL anhängst und druckst (empfohlen), oder direkt:
+Für ein Folien-PDF die gerenderte HTML-Datei in **Chrome/Chromium** öffnen, `?print-pdf` an die URL anhängen und über den Druckdialog als PDF speichern. Der Druckmodus von Revealjs funktioniert nur in Chromium-Browsern, nicht in Firefox.
 
-```bash
-quarto render presentation-UniBw.qmd --to pdf
-```
+`quarto render … --to pdf` ist dafür ungeeignet: Es erzeugt ein LaTeX-Dokument, keine Folien.
 
 ## Projektstruktur
 

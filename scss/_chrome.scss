@@ -95,7 +95,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.2em;
+  // Left padding keeps the author clear of Quarto's menu button
+  padding: 0 1.2em 0 3.6em;
   font-size: 0.36em;
   color: $ubw-text;
   border-top: 2px solid $ubw-orange;

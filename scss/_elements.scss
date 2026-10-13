@@ -16,9 +16,29 @@
     border: 1px solid rgba($ubw-beige, 0.5);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 
+    // Quarto writes `width="55%"` as inline style. A flex-basis of 0% would
+    // override it, so columns with a declared width keep that width as basis.
+    &[style*="width"] {
+      flex: 0 1 auto;
+    }
+
     &:hover {
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
+    }
+  }
+
+  // `.plain` on the row or on a single column drops the card look.
+  &.plain .column,
+  .column.plain {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+
+    &:hover {
+      box-shadow: none;
+      transform: none;
     }
   }
 }
@@ -206,13 +226,20 @@
 // IMAGES
 // ============================================================
 
+// Diagrams, logos and screenshots stay untouched. Photos (JPEG) get rounded
+// corners and a shadow; `.shadow` forces the effect, `.plain` removes it.
 .reveal section img {
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  &[src$=".jpg" i],
+  &[src$=".jpeg" i],
+  &[src^="data:image/jpeg"],
+  &.shadow {
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  &.plain {
+    border-radius: 0;
+    box-shadow: none;
   }
 }

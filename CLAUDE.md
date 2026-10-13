@@ -8,7 +8,6 @@ Target: 1920×1080 Revealjs slides, embedded as self-contained HTML.
 ```bash
 quarto render presentation-UniBw.qmd   # → presentation-UniBw.html (gitignored)
 quarto preview presentation-UniBw.qmd  # live preview with hot reload
-quarto render presentation-UniBw.qmd --to pdf
 ```
 
 ## Key files
@@ -23,6 +22,7 @@ quarto render presentation-UniBw.qmd --to pdf
 | `includes/sequential-hash.html` | JavaScript that overrides Revealjs's 2D hash (`/h/v`) with sequential numbering (`#/N`). Required because `hash: false` + `history: false` disable Revealjs's own URL management. |
 | `assets/` | Images and logos used in slides |
 | `bibliography/` | BibTeX references |
+| `tests/` | Headless-Chrome probe for a rendered deck (`node tests/probe.mjs <deck.html>`) |
 
 ## Patterns
 
@@ -38,5 +38,7 @@ quarto render presentation-UniBw.qmd --to pdf
 
 - `header-footer.html` contains an inlined Base64 SVG for the UniBw signet — do not open in a text editor without line-wrap, it will appear huge.
 - `quarto render` requires Quarto CLI to be installed (`quarto.org`).
+- Slide PDFs come from Chrome via `?print-pdf`. `quarto render --to pdf` builds a LaTeX document, not slides.
+- Write `date:` in ISO form (`2026-04-01`). Quarto reads `01.04.2026` as month.day and shows 04.01.2026.
 - The CSL style is fetched from a Zotero URL at render time — needs internet access for first render.
 - `hash: false` + `history: false` in the YAML are intentional — removing them breaks sequential URL numbering because Revealjs's `writeURL()` overwrites the hash after every `slidechanged` event.
