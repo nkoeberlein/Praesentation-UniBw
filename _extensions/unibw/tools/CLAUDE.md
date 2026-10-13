@@ -26,6 +26,9 @@ node _extensions/unibw/tools/export-pdf.mjs demo.html demo.pdf   # or: make pdf 
 
 ## Gotchas
 
+- In a deck created with `quarto use template` or `quarto add` this folder is
+  `_extensions/nkoeberlein/unibw/tools/` (Quarto inserts the GitHub user). The Makefile finds the
+  script with a wildcard; never hard-code `_extensions/unibw/…` in anything a deck uses.
 - Chrome is expected at the default macOS path; set `CHROME_BIN` to override.
 - Never wait for `Reveal` on a page that is not a deck — `gotoDeck()` rejects after 20 s.
 - The temporary Chrome profile lives in the system temp dir and is removed in `close()`.

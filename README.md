@@ -77,6 +77,9 @@ vertikal zentriert. Spalten: `::: {.columns .plain}` ohne Kartenoptik. Bilder: `
 make pdf DECK=mein-vortrag     # → mein-vortrag.pdf, eine Seite pro Folie (braucht Node ≥ 22 und Chrome)
 ```
 
+Ohne `make`: `node _extensions/nkoeberlein/unibw/tools/export-pdf.mjs mein-vortrag.html` (in diesem Repo
+liegt die Extension unter `_extensions/unibw/`).
+
 Von Hand: die HTML-Datei in **Chrome** öffnen, `?print-pdf` an die Adresse anhängen, drucken. Firefox
 unterstützt den Druckmodus von Revealjs nicht. `quarto render --to pdf` erzeugt ein LaTeX-Dokument, keine
 Folien.

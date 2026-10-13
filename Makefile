@@ -5,6 +5,10 @@
 QUARTO ?= quarto
 DECK ?= demo
 
+# In this repo the extension sits in _extensions/unibw; `quarto use template`
+# and `quarto add` install it as _extensions/<github-user>/unibw.
+EXPORT_PDF := $(firstword $(wildcard _extensions/unibw/tools/export-pdf.mjs _extensions/*/unibw/tools/export-pdf.mjs))
+
 .PHONY: render preview pdf test clean
 
 render:
@@ -14,7 +18,7 @@ preview:
 	$(QUARTO) preview $(DECK).qmd
 
 pdf: render
-	node _extensions/unibw/tools/export-pdf.mjs $(DECK).html $(DECK).pdf
+	node $(EXPORT_PDF) $(DECK).html $(DECK).pdf
 
 test:
 	$(QUARTO) render demo.qmd
