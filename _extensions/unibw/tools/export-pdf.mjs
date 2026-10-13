@@ -1,5 +1,5 @@
 // Exports a rendered deck as PDF, one page per slide, via Revealjs's print view.
-//   node tests/export-pdf.mjs demo.html [demo.pdf]
+//   node _extensions/unibw/tools/export-pdf.mjs demo.html [demo.pdf]
 
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -35,7 +35,7 @@ export async function exportPdf(htmlFile, pdfFile) {
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const html = process.argv[2];
   if (!html) {
-    console.error('Usage: node tests/export-pdf.mjs <deck.html> [out.pdf]');
+    console.error('Usage: node _extensions/unibw/tools/export-pdf.mjs <deck.html> [out.pdf]');
     process.exit(2);
   }
   const out = process.argv[3] || html.replace(/\.html$/, '.pdf');

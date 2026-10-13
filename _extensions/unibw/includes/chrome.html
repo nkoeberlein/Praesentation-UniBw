@@ -1,0 +1,134 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  Design © 2026 Nikolaus Köberlein (github.com/nkoeberlein). Assets excluded.
+-->
+<script>
+(function () {
+  // Written by ubw.lua from the YAML metadata
+  function readConfig() {
+    var el = document.getElementById('ubw-config');
+    try {
+      return el ? JSON.parse(el.textContent) : {};
+    } catch (e) {
+      console.warn('[ubw] ubw-config is not valid JSON', e);
+      return {};
+    }
+  }
+
+  function make(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+
+  function buildHeader(cfg) {
+    var header = make('div', 'ubw-header');
+    var left = make('div', 'ubw-header-left');
+    if (cfg.logoLeft) left.appendChild(make('img')).src = cfg.logoLeft;
+    if (cfg.professor) left.appendChild(make('span', 'ubw-header-prof', cfg.professor));
+    var right = make('div', 'ubw-header-right');
+    if (cfg.logoRight) right.appendChild(make('img')).src = cfg.logoRight;
+    header.appendChild(left);
+    header.appendChild(make('div', 'ubw-header-title'));
+    header.appendChild(right);
+    return header;
+  }
+
+  function buildFooter(cfg) {
+    var footer = make('div', 'ubw-footer');
+    var left = make('span', 'ubw-footer-left');
+    [['ubw-footer-author', cfg.author], ['ubw-footer-date', cfg.date], ['ubw-footer-title', cfg.title]]
+      .filter(function (part) { return part[1]; })
+      .forEach(function (part, i) {
+        if (i > 0) left.appendChild(make('span', 'ubw-footer-sep', '·'));
+        left.appendChild(make('span', part[0], part[1]));
+      });
+    footer.appendChild(left);
+    footer.appendChild(make('span', 'ubw-footer-num'));
+    return footer;
+  }
+
+  function init() {
+    var cfg = readConfig();
+    var root = Reveal.getRevealElement();
+    var slides = Reveal.getSlides();
+    var slideLabel = (cfg.labels && cfg.labels.slide) || 'Folie';
+
+    // --- Deck-wide options ---
+    if (/^(compact|dense)$/.test(cfg.density)) {
+      root.classList.add('ubw-density-' + cfg.density);
+    } else if (parseFloat(cfg.density) > 0) {
+      root.style.setProperty('--ubw-density', parseFloat(cfg.density));
+    }
+    if (cfg.animations === false) root.classList.add('ubw-no-anim');
+
+    // --- Canvas for header/footer: same size and scale as the slides ---
+    var chrome = make('div', 'ubw-chrome');
+    chrome.style.width = Reveal.getConfig().width + 'px';
+    chrome.style.height = Reveal.getConfig().height + 'px';
+    var header = chrome.appendChild(buildHeader(cfg));
+    var footer = chrome.appendChild(buildFooter(cfg));
+    root.appendChild(chrome);
+
+    function syncScale() {
+      chrome.style.setProperty('--ubw-scale', Reveal.getScale());
+    }
+    syncScale();
+    Reveal.on('resize', syncScale);
+
+    // --- Give every slide the title of the section (H1) it belongs to ---
+    var sectionName = '';
+    slides.forEach(function (slide) {
+      var h1 = slide.id === 'title-slide' ? null : slide.querySelector(':scope > h1');
+      if (h1) sectionName = h1.textContent.trim();
+      slide.setAttribute('data-ubw-section', sectionName);
+    });
+
+    // --- Header/footer state of one slide ---
+    function paint(headerEl, footerEl, slide) {
+      var isTitle = slide.id === 'title-slide' || slide.classList.contains('title-slide');
+      var isEnd = slide.classList.contains('end-slide');
+      var hasBg = slide.hasAttribute('data-background-color') || slide.hasAttribute('data-background-image');
+      var showHeader = !(isTitle || hasBg || isEnd);
+      var showFooter = !isTitle;
+
+      headerEl.style.opacity = showHeader ? '1' : '0';
+      headerEl.style.pointerEvents = showHeader ? 'auto' : 'none';
+      footerEl.style.opacity = showFooter ? '1' : '0';
+      footerEl.style.pointerEvents = showFooter ? 'auto' : 'none';
+
+      headerEl.querySelector('.ubw-header-title').textContent = slide.getAttribute('data-ubw-section') || '';
+      footerEl.querySelector('.ubw-footer-num').textContent =
+        slideLabel + ' ' + (slides.indexOf(slide) + 1) + ' / ' + slides.length;
+      return { showHeader: showHeader, showFooter: showFooter };
+    }
+
+    function updateChrome() {
+      var slide = Reveal.getCurrentSlide();
+      if (slide) paint(header, footer, slide);
+    }
+    updateChrome();
+    Reveal.on('slidechanged', updateChrome);
+
+    // --- PDF export (?print-pdf): every page gets its own header/footer ---
+    Reveal.on('pdf-ready', function () {
+      var pages = document.querySelectorAll('.reveal .slides .pdf-page');
+      Array.prototype.forEach.call(pages, function (page) {
+        var slide = page.querySelector('section');
+        if (!slide) return;
+        var h = header.cloneNode(true);
+        var f = footer.cloneNode(true);
+        var state = paint(h, f, slide);
+        if (state.showHeader) page.appendChild(h);
+        if (state.showFooter) page.appendChild(f);
+      });
+    });
+  }
+
+  if (Reveal.isReady()) init();
+  else Reveal.on('ready', init);
+})();
+</script>

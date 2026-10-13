@@ -1,0 +1,49 @@
+---
+title: "Titel des Vortrages"
+subtitle: "Untertitel"
+date: today                          # oder ISO-Datum, z. B. 2026-04-01
+course-name: "Name der Lehrveranstaltung"
+course-instructor: "Name des Dozenten"
+toc: true                            # Agenda aus den Abschnitten (#)
+# profile-photo: assets/profilfoto.jpg
+# bibliography: bibliography/references.bib
+format: unibw-revealjs
+---
+
+# Einleitung
+
+## Erste Folie
+
+- Ein Abschnitt beginnt mit `#`, eine Folie mit `##`
+- Agenda, Abschnittsfolien und Abschlussfolie entstehen automatisch
+- Zu viel Inhalt wird automatisch verkleinert
+
+## Zwei Spalten
+
+::: {.columns}
+::: {.column width="60%"}
+- Spaltenbreiten frei wählbar
+- `.plain` an `.columns` entfernt die Kartenoptik
+:::
+
+::: {.column width="40%"}
+::: {.callout-note}
+## Hinweis
+Hinweisboxen mit `callout-note`, `callout-tip`, `callout-warning`.
+:::
+:::
+:::
+
+# Hauptteil
+
+## Folie mit Quellenangabe {source="Quelle: Vorlesung, Folie 3.12"}
+
+1. Erster Punkt
+2. Zweiter Punkt
+
+# Zusammenfassung
+
+## Fazit
+
+- Kernaussage eins
+- Kernaussage zwei

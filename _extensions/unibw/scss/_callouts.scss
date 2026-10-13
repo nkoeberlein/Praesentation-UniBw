@@ -1,0 +1,89 @@
+// ============================================================
+// CALLOUT BOXES (custom class)
+// ============================================================
+
+.callout-box {
+  border-radius: 12px;
+  padding: 0.8em 1.2em;
+  margin: 0.5em 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+  }
+
+  &.info {
+    background: rgba($ubw-light-blue, 0.2);
+    border: 1px solid rgba($ubw-light-blue, 0.5);
+
+    &::before {
+      background: $ubw-dark-blue;
+    }
+  }
+
+  &.warning {
+    background: rgba($ubw-gold, 0.15);
+    border: 1px solid rgba($ubw-gold, 0.4);
+
+    &::before {
+      background: $ubw-orange;
+    }
+  }
+
+  &.success {
+    background: rgba($ubw-green, 0.15);
+    border: 1px solid rgba($ubw-green, 0.4);
+
+    &::before {
+      background: $ubw-green;
+    }
+  }
+}
+
+// ============================================================
+// QUARTO CALLOUTS (`::: {.callout-note}` …) in the same look
+// ============================================================
+
+@mixin ubw-callout($accent, $tint) {
+  background: rgba($tint, 0.18);
+  border-color: rgba($tint, 0.5);
+  border-left-color: $accent;
+
+  .callout-title {
+    background: rgba($tint, 0.35);
+    color: $ubw-title-blue;
+  }
+}
+
+.reveal .slides section div.callout {
+  margin: 0.5em 0;
+  border: 1px solid;
+  border-left-width: 5px;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.85em;
+  color: $ubw-text;
+
+  &.callout-note {
+    @include ubw-callout($ubw-dark-blue, $ubw-light-blue);
+  }
+
+  &.callout-tip {
+    @include ubw-callout($ubw-green, $ubw-green);
+  }
+
+  &.callout-warning,
+  &.callout-caution {
+    @include ubw-callout($ubw-orange, $ubw-gold);
+  }
+
+  &.callout-important {
+    @include ubw-callout($ubw-orange, $ubw-orange);
+  }
+}

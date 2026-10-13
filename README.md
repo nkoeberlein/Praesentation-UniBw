@@ -1,80 +1,99 @@
 # UniBw Präsentationsvorlage (Quarto Revealjs)
 
-Dieses Projekt bietet eine professionelle Quarto-Präsentationsvorlage im Design der Universität der Bundeswehr München (UniBw München). Die Vorlage basiert auf Revealjs und ist für wissenschaftliche Vorträge, Abschlussarbeiten oder Projektpräsentationen optimiert.
+Quarto-Format `unibw-revealjs` im Design der Universität der Bundeswehr München. Ziel: Folien in reinem
+Markdown schreiben, rendern, fertig – ohne Nacharbeit am Layout.
 
-## Features
+## Schnellstart
 
-- **Corporate Design:** Angepasstes SCSS-Theme (`scss/ubw-theme.scss`) mit den offiziellen Farben und Schriftarten (soweit möglich).
-- **Header & Footer:** Automatisierte Einblendung von Name, Titel, Datum und Seitenzahlen über `includes/header-footer.html`.
-- **Layout-Optimierung:** Voreingestellt auf 1920×1080 (16:9) für moderne Beamer und Bildschirme.
-- **Wissenschaftliche Zitierweise:** Integrierte Unterstützung für BibTeX/CSL über Pandoc.
-- **Interaktive Elemente:** Nutzung von Revealjs-Features wie `auto-animate`, `callout-blocks`, Code-Highlighting und Fragmente.
-- **End-Slide:** Spezielle Abschlussfolie mit zentriertem Profilbild und Steckbrief, per JS aus den YAML-Metadaten befüllt.
-- **Fortlaufende URL-Nummerierung:** Die Folien sind in der Adresszeile sequentiell nummeriert (`#/1`, `#/2`, …), nicht nach der internen Revealjs-2D-Struktur (`/Abschnitt/Folie`).
-
-## Voraussetzungen
-
-Um die Präsentation zu bearbeiten und zu rendern, benötigst du **Quarto**.
-
-1.  Lade Quarto von [quarto.org](https://quarto.org/docs/get-started/) herunter und installiere es.
-2.  (Optional) Installiere eine IDE wie VS Code mit der Quarto-Extension für eine bessere Vorschau.
-
-## Verwendung
-
-### Rendern der Präsentation
-
-Um die Präsentation in eine HTML-Datei zu umzuwandeln, führe folgenden Befehl im Projektverzeichnis aus:
+Voraussetzung: [Quarto](https://quarto.org/docs/get-started/) ≥ 1.4.
 
 ```bash
-quarto render presentation-UniBw.qmd
+quarto use template nkoeberlein/Praesentation-UniBw   # legt einen neuen Ordner mit der Vorlage an
+quarto preview mein-vortrag.qmd                       # Live-Vorschau
+quarto render mein-vortrag.qmd                        # → mein-vortrag.html (eine Datei, alles eingebettet)
 ```
 
-Die resultierende Datei `presentation-UniBw.html` ist "self-contained" (alle Ressourcen wie Bilder und CSS sind eingebettet), sodass sie problemlos geteilt werden kann.
+Eine Präsentation braucht nur diesen Kopf:
 
-### Live-Vorschau während der Bearbeitung
+```yaml
+---
+title: "Titel des Vortrages"
+subtitle: "Untertitel"
+date: 2026-04-01          # ISO-Format oder today; angezeigt wird 01.04.2026
+course-name: "Name der Lehrveranstaltung"
+course-instructor: "Name des Dozenten"
+toc: true                 # Agenda aus den Abschnitten
+format: unibw-revealjs
+---
+```
+
+Angaben zur Person (`author`, `author-title`, `position`, `cohort`, `student-id`, `email`, …) stehen einmal
+in `_quarto.yml` und gelten für alle Präsentationen im Ordner. Jedes Feld ist optional – was fehlt, wird
+weggelassen.
+
+Bestehende Präsentationen auf den neuesten Stand der Vorlage bringen:
 
 ```bash
-quarto preview presentation-UniBw.qmd
+quarto update extension nkoeberlein/Praesentation-UniBw
 ```
 
-### PDF-Export
+## Was automatisch passiert
 
-Für ein Folien-PDF die gerenderte HTML-Datei in **Chrome/Chromium** öffnen, `?print-pdf` an die URL anhängen und über den Druckdialog als PDF speichern. Der Druckmodus von Revealjs funktioniert nur in Chromium-Browsern, nicht in Firefox.
+| Im Markdown | Ergebnis |
+|---|---|
+| `# Abschnitt` | Abschnittsfolie in Blau; der Abschnitt erscheint im Header der folgenden Folien |
+| `## Folie` | Inhaltsfolie mit Header, Footer und Foliennummer |
+| `toc: true` | Agenda-Folie, ab sechs Abschnitten zweispaltig |
+| zu viel Inhalt | Schrift der Folie wird stufenweise verkleinert, bis alles passt |
+| ein einzelnes Bild | füllt den freien Platz der Folie |
+| `## Folie {source="Quelle …"}` | Quellenzeile am Folienfuß (Markdown und Zitate `[@key]` möglich) |
+| `bibliography: …` | Quellenfolie am Ende, sofern kein eigenes `::: {#refs}` gesetzt ist |
+| Ende des Dokuments | Abschlussfolie mit Steckbrief aus den YAML-Angaben |
 
-`quarto render … --to pdf` ist dafür ungeeignet: Es erzeugt ein LaTeX-Dokument, keine Folien.
+Passt eine Folie auch in der kleinsten Stufe nicht, wird sie in `quarto preview` rot markiert und in der
+Browser-Konsole gemeldet. Dann die Folie teilen oder kürzen.
 
-## Projektstruktur
+## Optionen im YAML
+
+| Schlüssel | Standard | Wirkung |
+|---|---|---|
+| `ubw-density` | `normal` | `compact`, `dense` oder Zahl (z. B. `0.9`): Schriftgröße aller Inhaltsfolien |
+| `ubw-animations` | `true` | `false` schaltet die Einblend-Animationen ab |
+| `profile-photo` | – | Bild für die Abschlussfolie |
+| `end-slide` / `end-title` | `true` / „Vielen Dank — Fragen?" | Abschlussfolie aus- bzw. umbenennen |
+| `logo-left` / `logo-right` | Institutslogo / UniBw-Signet | eigener Bildpfad oder `false` |
+| `title-background` | Luftbild | eigener Bildpfad oder `false` |
+| `section-color` | `#2A3D7A` | Hintergrund der Abschnittsfolien |
+| `short-title` | – | kürzerer Titel für den Footer |
+| `lang` | `de` | `en` stellt die Beschriftungen um; einzelne Texte über `ubw-labels` |
+| `university`, `faculty`, `institute`, `chair`, `professor` | Professur Karcher | Angaben im Header und Steckbrief |
+
+Pro Folie: `{.smaller}` kleinere Schrift, `{.no-fit}` keine automatische Verkleinerung, `{.center}`
+vertikal zentriert. Spalten: `::: {.columns .plain}` ohne Kartenoptik. Bilder: `{.shadow}` / `{.plain}`.
+
+## PDF
+
+```bash
+make pdf DECK=mein-vortrag     # → mein-vortrag.pdf, eine Seite pro Folie (braucht Node ≥ 22 und Chrome)
+```
+
+Von Hand: die HTML-Datei in **Chrome** öffnen, `?print-pdf` an die Adresse anhängen, drucken. Firefox
+unterstützt den Druckmodus von Revealjs nicht. `quarto render --to pdf` erzeugt ein LaTeX-Dokument, keine
+Folien.
+
+## Aufbau des Repos
 
 ```
-presentation-UniBw.qmd   ← Hauptdatei: Inhalte + YAML-Metadaten
-_quarto.yml               ← Projektweite Quarto-Konfiguration
-scss/
-  ubw-theme.scss          ← SCSS-Einstiegspunkt (Variablen + @import)
-  _animations.scss        ← Keyframe-Animationen
-  _slides.scss            ← Globales Folienlayout, Titelfolie, Abschnittstrenner
-  _chrome.scss            ← Header, Footer, Fortschrittsbalken
-  _typography.scss        ← Überschriften, Listen, Code
-  _elements.scss          ← Spalten, Tabellen, Callouts, Links
-  _end-slide.scss         ← Abschlussfolie, Druckstile
-includes/
-  header-footer.html      ← JS: liest YAML-Meta-Tags, injiziert Header/Footer in DOM
-  sequential-hash.html    ← JS: ersetzt Revealjs-Hash durch fortlaufende Nummerierung
-assets/                   ← Logos und Bilder (Signet, Athene, IA-Logo, Foto)
-bibliography/             ← BibTeX-Quellen (.bib)
+template.qmd            ← Startdatei für neue Präsentationen
+demo.qmd                ← zeigt alle Elemente; dient zugleich als Prüfdeck
+_quarto.yml             ← Angaben zur Person
+_extensions/unibw/      ← das Format: Theme (scss/), Skripte (includes/), Filter (ubw.lua), Logos (assets/)
+assets/, bibliography/  ← Bilder und Literatur der Demo
+tests/                  ← Layout-Prüfung in Headless-Chrome (`make test`)
 ```
-
-## Konfiguration
-
-In der `presentation-UniBw.qmd` Datei können im YAML-Header (ganz oben) alle Metadaten angepasst werden:
-- Titel und Untertitel
-- Autor, Dienstgrad/Titel, Matrikelnummer
-- Institut, Fakultät, Lehrstuhl
-- Kursname und Dozent
 
 ## Lizenz & Credits
 
-Dieses Foliendesign wurde ursprünglich von **Nikolaus Köberlein** entworfen.
-
 - **Design:** © 2026 Nikolaus Köberlein ([github.com/nkoeberlein](https://github.com/nkoeberlein)).
 - **Code-Lizenz:** Mozilla Public License 2.0 (MPL 2.0).
-- **Assets:** Die enthaltenen Bilder und Logos der Universität der Bundeswehr München unterliegen dem jeweiligen Urheberrecht der Institution.
+- **Assets:** Bilder und Logos der Universität der Bundeswehr München unterliegen dem Urheberrecht der Institution.

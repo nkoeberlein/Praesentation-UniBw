@@ -1,0 +1,227 @@
+---
+#  This Source Code Form is subject to the terms of the Mozilla Public
+#  License, v. 2.0. If a copy of the MPL was not distributed with this
+#  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#  Design © 2026 Nikolaus Köberlein (github.com/nkoeberlein). Assets excluded.
+
+title: "Titel des Vortrages"
+subtitle: "Untertitel"
+date: 2026-04-01                       # ISO-Format JJJJ-MM-TT oder today
+course-instructor: "Dr. Harald Hagel"
+profile-photo: assets/profilfoto.jpg
+toc: true                              # Agenda aus den Abschnitten (#)
+bibliography: bibliography/references.bib
+csl: https://www.zotero.org/styles/ieee
+format: unibw-revealjs
+---
+
+# Einleitung & Motivation
+
+## Motivation
+
+::: {.columns}
+::: {.column width="55%"}
+- Herausforderung A erfordert neue Ansätze
+- Bestehende Lösungen greifen zu kurz
+- Unser Beitrag adressiert die Lücke
+:::
+
+::: {.column width="45%"}
+::: {.callout-box .info}
+**Kernfrage:** Wie lässt sich X effizient lösen?
+:::
+:::
+:::
+
+::: {.notes}
+Motivation ausführlich erläutern. Bezug zu aktuellen Arbeiten herstellen.
+:::
+
+## Stand der Forschung {source="Zitat nach [@kay1984]"}
+
+> "Die beste Methode, die Zukunft vorherzusagen, ist, sie zu gestalten."
+> — Alan Kay
+
+- Ansatz A [@autor2024] — limitiert durch ...
+- Ansatz B [@autor2025] — verbessert, aber ...
+- **Unser Ansatz** — kombiniert die Stärken beider
+
+## Forschungsfragen
+
+::: {.incremental}
+1. **RQ1:** Wie lässt sich X quantifizieren?
+2. **RQ2:** Welchen Einfluss hat Y auf Z?
+3. **RQ3:** Ist der Ansatz generalisierbar?
+:::
+
+# Methodik
+
+## Methodik — Überblick {auto-animate="true" data-auto-animate-id="method"}
+
+::: {.columns}
+::: {.column width="50%"}
+**Phase 1: Analyse**
+
+- Datenerhebung
+- Vorverarbeitung
+- Feature-Extraktion
+:::
+
+::: {.column width="50%"}
+**Phase 2: Modellierung**
+
+- Architekturentwurf
+- Training & Optimierung
+- Validierung
+:::
+:::
+
+## Methodik — Detail {auto-animate="true" data-auto-animate-id="method"}
+
+::: {.columns}
+::: {.column width="50%"}
+**Phase 1: Analyse**
+
+::: {.callout-box .success}
+Abgeschlossen mit N=1000 Datensätzen
+:::
+:::
+
+::: {.column width="50%"}
+**Phase 2: Modellierung**
+
+::: {.callout-box .warning}
+Aktuell in Bearbeitung
+:::
+:::
+:::
+
+## Datengrundlage {.smaller}
+
+| Datensatz    | Umfang  | Quelle       | Zeitraum    |
+|:-------------|:-------:|:-------------|:------------|
+| Training     | 8.000   | Quelle A     | 2022–2024   |
+| Validation   | 1.000   | Quelle A     | 2024        |
+| Test         | 1.000   | Quelle B     | 2025        |
+
+## Implementierung
+
+```{.python code-line-numbers="|1-3|5-8|10-12"}
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Daten vorbereiten
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Modell evaluieren
+y_pred = model.predict(X_test)
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.2%}")
+```
+
+::: {.notes}
+Code zeilenweise durchgehen. Erst Imports, dann Datenaufbereitung, dann Evaluation.
+:::
+
+## Abbildung
+
+![Ein einzelnes Bild füllt automatisch den freien Platz der Folie](_extensions/unibw/assets/luftaufnahme-unibw-muenchen.jpg)
+
+## Bild neben Text
+
+::: {.columns .plain}
+::: {.column width="30%"}
+![](assets/Athene.png){width=100%}
+:::
+
+::: {.column width="70%"}
+- `.plain` an den Spalten entfernt die Kartenoptik
+- Die Spaltenbreiten aus `width="…"` werden eingehalten
+- Diagramme und Logos bleiben ohne Schatten
+:::
+:::
+
+# Ergebnisse
+
+## Quantitative Ergebnisse
+
+| Methode          | Precision | Recall | F1-Score |
+|:-----------------|:---------:|:------:|:--------:|
+| Baseline         | 0.72      | 0.68   | 0.70     |
+| Ansatz A         | 0.81      | 0.79   | 0.80     |
+| **Unser Ansatz** | **0.93**  | **0.91** | **0.92** |
+
+::: {.callout-box .success}
+**+12 Prozentpunkte** Verbesserung im F1-Score gegenüber dem besten Vergleichsverfahren.
+:::
+
+## Qualitative Analyse
+
+::: {.columns}
+::: {.column width="50%"}
+**Stärken**
+
+- Robuste Ergebnisse über alle Testsets
+- Geringe Varianz zwischen Durchläufen
+- Interpretierbare Entscheidungen
+:::
+
+::: {.column width="50%"}
+**Limitierungen**
+
+- Laufzeit bei sehr großen Datensätzen
+- Abhängigkeit von Hyperparameter-Wahl
+- Generalisierung auf Domäne Y offen
+:::
+:::
+
+## Detailanalyse: Robustheit {source="Eigene Messung, 10 Durchläufe"}
+
+- Kreuzvalidierung (k=10): Std. < 0.02
+- Konfidenzintervall: [0.90, 0.94] bei 95%
+- Konsistent über verschiedene Seed-Werte
+
+$$
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+$$
+
+## Hinweisboxen
+
+::: {.callout-note}
+## Standard-Callouts von Quarto
+`callout-note`, `callout-tip`, `callout-warning` und `callout-important` sind im Design der Vorlage gestaltet.
+:::
+
+::: {.callout-warning}
+Ohne Titel funktioniert es genauso.
+:::
+
+::: {.callout-box .info}
+Die bisherigen Klassen `.callout-box .info | .success | .warning` bleiben erhalten.
+:::
+
+# Zusammenfassung
+
+## Zusammenfassung
+
+1. **Problem** definiert und formalisiert
+2. **Methodik** entwickelt und implementiert
+3. **Evaluation** zeigt signifikante Verbesserungen
+4. **Beitrag** zur Community bereitgestellt
+
+::: {.callout-box .info}
+**Nächste Schritte:** Erweiterung auf Domäne Y, Langzeitstudie, Open-Source Release
+:::
+
+## Quellen {.smaller}
+
+::: {#refs}
+:::
+
+::: {.callout-box .info}
+**Copyright & Design**
+
+Dieses Foliendesign wurde von **Nikolaus Köberlein** ([github.com/nkoeberlein](https://github.com/nkoeberlein)) entworfen und ist unter der **Mozilla Public License 2.0 (MPL 2.0)** lizenziert. Assets (Bilder/Logos) sind hiervon ausgenommen.
+:::

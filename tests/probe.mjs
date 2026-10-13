@@ -5,7 +5,7 @@
 import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { launch } from './cdp.mjs';
+import { launch } from '../_extensions/unibw/tools/cdp.mjs';
 
 // Runs inside the page. Returns facts about the slide that is currently shown.
 const PROBE = `(function () {

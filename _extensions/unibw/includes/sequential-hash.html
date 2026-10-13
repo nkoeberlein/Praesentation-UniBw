@@ -36,13 +36,16 @@
     if (coords) Reveal.slide(coords[0], coords[1]);
   }
 
-  Reveal.on('ready', function () {
+  function init() {
     buildSlideMap();
     // Restore slide from hash on load
     if (window.location.hash) navigateToHash();
     // Write initial hash
     history.replaceState(null, null, '#/' + getLinearIndex());
-  });
+  }
+
+  if (Reveal.isReady()) init();
+  else Reveal.on('ready', init);
 
   Reveal.on('slidechanged', function () {
     history.pushState(null, null, '#/' + getLinearIndex());

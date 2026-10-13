@@ -1,6 +1,6 @@
 # scss/
 
-SCSS theme for the Quarto Revealjs presentation. Entry point is `ubw-theme.scss`.
+SCSS theme of the format. Entry point is `ubw-theme.scss`, referenced in `_extension.yml`.
 
 ## File map
 
@@ -9,10 +9,11 @@ SCSS theme for the Quarto Revealjs presentation. Entry point is `ubw-theme.scss`
 | `ubw-theme.scss` | Colors, fonts, layout variables (`/*-- scss:defaults --*/`) + `@import` of all partials |
 | `_animations.scss` | CSS keyframes (fadeInUp, fadeInLeft, fadeInRight, scaleIn, slideInLine) |
 | `_layout.scss` | Box model of content slides, density, auto-fit hooks, `.r-stretch`, overflow marker |
-| `_slides.scss` | Entrance animation, title slide, section dividers |
+| `_slides.scss` | Entrance animation, agenda (`#TOC`), title slide, section dividers |
 | `_chrome.scss` | `.ubw-chrome` canvas, `.ubw-header`, `.ubw-footer`, progress bar, fragment animations |
 | `_typography.scss` | `h2`/`h3`, lists, code blocks |
-| `_elements.scss` | Columns, blockquotes, tables, callout boxes, references, links, images |
+| `_elements.scss` | Columns, blockquotes, tables, source line, captions, references, links, images |
+| `_callouts.scss` | `.callout-box` and Quarto's native callouts in the same look |
 | `_end-slide.scss` | End/thank-you slide, auto-animate, speaker notes |
 | `_print.scss` | Restores the box model inside Revealjs's print view (`html.reveal-print`) |
 
@@ -21,7 +22,7 @@ SCSS theme for the Quarto Revealjs presentation. Entry point is `ubw-theme.scss`
 - Variables are defined in `ubw-theme.scss` defaults. Partials see them via `@import`
   (shared scope — do NOT switch to `@use`).
 - `$ubw-content` is the selector for "normal content slide" (everything except title slide, H1
-  dividers and the end slide). Use `#{$ubw-content} { … }` instead of `.reveal .slides section`,
+  dividers and the end slide, plus the agenda). Use it instead of `.reveal .slides section`,
   which also hits stack wrappers and the special slides.
 - Layout values (`$ubw-header-height`, `$ubw-gap-top`, `$ubw-side-padding`, …) are **px on the
   1920×1080 canvas**. Header and footer are scaled together with the slides, so px are safe there.
@@ -31,10 +32,13 @@ SCSS theme for the Quarto Revealjs presentation. Entry point is `ubw-theme.scss`
 
 ## Gotchas
 
+- `$ubw-content` is a selector **list**. Only use it as a block (`#{$ubw-content} { pre { … } }`).
+  `#{$ubw-content} pre { … }` would append `pre` to the last selector only.
 - Children of a content slide are flex items with `flex: 0 0 auto`. Do not allow shrinking: blocks
   with `overflow: hidden` (tables, callouts) would be squeezed silently instead of triggering auto-fit.
 - Pandoc gives H1 dividers the class `title-slide` as well. Title-only rules must use `#title-slide`,
   divider-only rules `.title-slide.level1`.
+- Columns need `box-sizing: border-box`, otherwise the card padding distorts declared widths.
 - Revealjs's print view resets `padding`, `display`, `position` and `transform` on every section with
   `!important`. Anything the print view needs has to be repeated in `_print.scss` with `!important`.
 - A line of highlighted code must stay `inline-block`; `display: block` doubles the line spacing.

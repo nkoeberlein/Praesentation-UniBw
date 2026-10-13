@@ -1,3 +1,15 @@
 project:
   title: "UniBw Präsentation"
   type: default
+
+# Angaben zur Person – gelten für alle Präsentationen in diesem Ordner.
+# Nicht benötigte Zeilen einfach löschen.
+author: "Vorname Nachname"
+author-title: "Leutnant B.Sc."
+position: "Wissenschaftlicher Mitarbeiter"
+expertise: "Machine Learning, Software Engineering, Datenanalyse"
+student-id: "12345678"
+cohort: "MINF26"
+email: "vorname.nachname@unibw.de"
+profile-website: "https://www.unibw.de"
+study-program: "Master Informatik"

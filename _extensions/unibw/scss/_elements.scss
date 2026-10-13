@@ -8,6 +8,9 @@
   gap: 1.5em;
 
   .column {
+    // border-box: the declared width includes the card padding, otherwise
+    // narrow columns come out wider than declared
+    box-sizing: border-box;
     flex: 1 1 0%;
     min-width: 0;
     background: rgba($ubw-gray-light, 0.3);
@@ -120,51 +123,30 @@
 }
 
 // ============================================================
-// CALLOUT BOXES (custom class)
+// SOURCE LINE (`## Title {source="…"}`) AND CAPTIONS
 // ============================================================
 
-.callout-box {
-  border-radius: 12px;
-  padding: 0.8em 1.2em;
-  margin: 0.5em 0;
-  position: relative;
-  overflow: hidden;
+// Sits at the bottom of the slide's flex column
+.reveal .slides section .slide-source {
+  margin-top: auto;
+  padding-top: 0.8em;
+  font-size: 0.45em;
+  font-style: italic;
+  color: $ubw-text;
+  opacity: 0.65;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 100%;
+  p {
+    margin: 0;
   }
+}
 
-  &.info {
-    background: rgba($ubw-light-blue, 0.2);
-    border: 1px solid rgba($ubw-light-blue, 0.5);
-
-    &::before {
-      background: $ubw-dark-blue;
-    }
-  }
-
-  &.warning {
-    background: rgba($ubw-gold, 0.15);
-    border: 1px solid rgba($ubw-gold, 0.4);
-
-    &::before {
-      background: $ubw-orange;
-    }
-  }
-
-  &.success {
-    background: rgba($ubw-green, 0.15);
-    border: 1px solid rgba($ubw-green, 0.4);
-
-    &::before {
-      background: $ubw-green;
-    }
-  }
+.reveal .slides section p.caption,
+.reveal .slides section figcaption {
+  margin: 0.5em 0 0;
+  font-size: 0.6em;
+  text-align: center;
+  color: $ubw-text;
+  opacity: 0.75;
 }
 
 // ============================================================

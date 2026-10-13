@@ -1,0 +1,61 @@
+title: UniBw Präsentation
+author: Nikolaus Köberlein
+version: 2.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    revealjs:
+      theme: [default, scss/ubw-theme.scss]
+      filters:
+        - ubw.lua
+      template-partials:
+        - title-slide.html
+      include-after-body:
+        - includes/chrome.html
+        - includes/auto-fit.html
+        - includes/sequential-hash.html
+
+      # --- Language and date ---
+      lang: de
+      date-format: "DD.MM.YYYY"
+
+      # --- Canvas ---
+      width: 1920
+      height: 1080
+      margin: 0
+      center: false
+      embed-resources: true
+      pdf-max-pages-per-slide: 1
+
+      # --- Navigation ---
+      # hash/history stay off: includes/sequential-hash.html owns the URL
+      hash: false
+      history: false
+      navigation-mode: linear
+      progress: true
+      slide-number: false
+      preview-links: auto
+      toc-depth: 1
+      toc-title: Agenda
+
+      # --- Motion ---
+      transition: slide
+      transition-speed: default
+      background-transition: none
+      auto-animate-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      auto-animate-duration: 0.8
+
+      # --- Code ---
+      highlight-style: github
+      code-line-numbers: true
+
+      # --- Defaults of this template (override in the deck or in _quarto.yml) ---
+      university: "Universität der Bundeswehr München"
+      faculty: "Fakultät für Informatik"
+      institute: "INF4 - Angewandte Informatik"
+      chair: "Professur für Softwarewerkzeuge und Methoden für integrierte Anwendungen"
+      professor: "Univ.-Professor Dr.-Ing. Andreas Karcher"
+      section-color: "#2A3D7A"
+      ubw-density: normal
+      ubw-animations: true
+      end-slide: true

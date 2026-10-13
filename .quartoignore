@@ -1,0 +1,9 @@
+demo.qmd
+tests/
+bibliography/
+CLAUDE.md
+assets/CLAUDE.md
+assets/Signet_UniBw.pdf
+.markdownlint.json
+.pre-commit-config.yaml
+.stylelintrc.json

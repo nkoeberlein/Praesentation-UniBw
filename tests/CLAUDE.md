@@ -1,34 +1,44 @@
 # tests/
 
-Checks a rendered deck in headless Chrome. No npm dependencies — plain Node (>= 22) and the
-Chrome DevTools Protocol.
+Checks rendered decks in headless Chrome. Run everything with `make test` from the repo root.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `cdp.mjs` | Starts headless Chrome, opens one page, exposes `evaluate`, `gotoDeck`, `screenshot`, `pdf` |
-| `probe.mjs` | Walks through every slide and collects layout facts (heights, columns, header/footer text) |
+| `probe.mjs` | Walks through every slide of a rendered deck and collects layout facts (heights, columns, header/footer text, fit level) |
+| `check-slides.mjs` | Applies the layout rules of the template to a probe report; exit code 1 on a violation |
+| `fixture.qmd` | Stress cases: too many bullets, long code, images, declared column widths, a hopeless table |
+| `legacy.qmd` | A deck in the old hand-written style (explicit divider color, manual end slide, English labels) |
 
 ## Usage
 
 ```bash
-quarto render presentation-UniBw.qmd
-node tests/probe.mjs presentation-UniBw.html                 # JSON report on stdout
-node tests/probe.mjs presentation-UniBw.html --shots /tmp/s  # plus one PNG per slide
+make test                                                   # render + check demo, fixture, legacy
+node tests/probe.mjs demo.html --shots /tmp/shots > report.json   # raw facts plus one PNG per slide
+node tests/check-slides.mjs demo.html --date 01.04.2026
 ```
+
+## Rules checked
+
+- Content slides are exactly 1080 px high, carry no inline `transform`, and their content stays between
+  header and footer.
+- No slide is flagged as overflowing, except ids passed with `--expect-overflow`; ids passed with
+  `--expect-fit` must have been shrunk.
+- Columns have the widths declared in Markdown (±3 percentage points).
+- Header shows the section of the slide, also after a deep link; footer shows `n / total` and the date.
+- At most one end slide.
 
 ## Patterns
 
-- Code that runs inside the page is passed as a string to `browser.evaluate()`; keep it ES5-style
-  and self-contained (no closures over Node variables).
-- Measurements are taken after `SETTLE`, which waits for all entrance animations. Measuring earlier
-  returns positions that are still offset by the animation.
-- `gotoDeck()` always goes through `about:blank` first, otherwise a URL that differs only in its
-  hash would not reload the page.
+- A layout bug gets a slide with an explicit `{#id}` in `fixture.qmd` before it is fixed.
+- `probe.mjs` switches slide transitions off and waits for entrance animations (`SETTLE`) before
+  measuring; positions taken earlier are still offset.
+- The Chrome client lives in `_extensions/unibw/tools/cdp.mjs`, because the PDF export ships with the
+  format and uses it too.
 
 ## Gotchas
 
-- Chrome is expected at the default macOS path; set `CHROME_BIN` to override.
-- Never wait for `Reveal` on a page that is not a deck — `gotoDeck()` rejects after 20 s.
-- The temporary Chrome profile lives in the system temp dir and is removed in `close()`.
+- `tests/*.qmd` find the format through the `_extensions/` folder of the project root; image paths in
+  them are relative to `tests/`.
+- A top-level HTML comment in a `.qmd` becomes an empty slide. Put notes into YAML comments.

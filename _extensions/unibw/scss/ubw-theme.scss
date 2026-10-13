@@ -25,6 +25,7 @@ $presentation-heading-font: "Calibri Light", "Calibri", "Segoe UI Light", "Helve
 $presentation-heading-color: $ubw-title-blue;
 $body-color: $ubw-text;
 $link-color: $ubw-dark-blue;
+$code-color: $ubw-dark-blue;
 $presentation-heading-font-weight: 700;
 $body-bg: #ffffff;
 
@@ -41,8 +42,11 @@ $ubw-gap-top: 56px;      // header → content
 $ubw-gap-bottom: 40px;   // content → footer
 $ubw-side-padding: 160px;
 
-// Slides with normal content: everything except title slide, dividers, end slide
-$ubw-content: ".reveal .slides section.slide:not(.title-slide):not(.end-slide)";
+// Slides with normal content: everything except title slide, dividers, end
+// slide — plus the agenda Quarto builds for `toc: true`.
+// This is a selector list: only use it as a block (`#{$ubw-content} { … }`),
+// never with something appended on the same line.
+$ubw-content: ".reveal .slides section.slide:not(.title-slide):not(.end-slide), .reveal .slides section#TOC";
 
 /*-- scss:rules --*/
 
@@ -51,6 +55,7 @@ $ubw-content: ".reveal .slides section.slide:not(.title-slide):not(.end-slide)";
 @import "slides";       // Entrance animation, title slide, section dividers
 @import "chrome";       // Header bar, footer bar, progress bar, fragments
 @import "typography";   // Headings, lists, code blocks
-@import "elements";     // Columns, blockquotes, tables, callouts, refs, links, images
+@import "elements";     // Columns, blockquotes, tables, refs, links, images, source line
+@import "callouts";     // .callout-box and Quarto's native callouts
 @import "end-slide";    // End/thank-you slide, auto-animate, notes
 @import "print";        // PDF export via ?print-pdf

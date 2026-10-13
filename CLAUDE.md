@@ -1,44 +1,45 @@
 # UniBw Quarto Präsentationsvorlage
 
-Quarto Revealjs presentation template in the corporate design of Universität der Bundeswehr München.
-Target: 1920×1080 Revealjs slides, embedded as self-contained HTML.
+Quarto format extension `unibw-revealjs`: Revealjs slides in the corporate design of Universität der
+Bundeswehr München. Target: 1920×1080 canvas, one self-contained HTML file per deck.
+The goal of the template is that a deck is written in plain Markdown and needs no manual layout work.
 
-## Build commands
+## Commands
 
 ```bash
-quarto render presentation-UniBw.qmd   # → presentation-UniBw.html (gitignored)
-quarto preview presentation-UniBw.qmd  # live preview with hot reload
+make render DECK=demo     # quarto render demo.qmd → demo.html (gitignored)
+make preview DECK=demo    # live preview
+make pdf DECK=demo        # one PDF page per slide, via headless Chrome
+make test                 # renders demo + test decks and checks the layout rules
 ```
 
 ## Key files
 
-| File | Role |
+| Path | Role |
 |------|------|
-| `presentation-UniBw.qmd` | Presentation content + YAML metadata (edit this to customize slides) |
-| `_quarto.yml` | Project-level config (`title: "UniBw Präsentation"`, `type: default`) |
-| `scss/ubw-theme.scss` | SCSS entry point — color/font variables + `@import` of partials |
-| `scss/_*.scss` | SCSS partials (animations, slides, chrome, typography, elements, end-slide) |
-| `includes/header-footer.html` | JavaScript that reads YAML `<meta>` tags and injects `.ubw-header` / `.ubw-footer` divs into each slide at runtime |
-| `includes/sequential-hash.html` | JavaScript that overrides Revealjs's 2D hash (`/h/v`) with sequential numbering (`#/N`). Required because `hash: false` + `history: false` disable Revealjs's own URL management. |
-| `assets/` | Images and logos used in slides |
-| `bibliography/` | BibTeX references |
-| `tests/` | Headless-Chrome probe for a rendered deck (`node tests/probe.mjs <deck.html>`) |
+| `_extensions/unibw/` | The format itself — see its CLAUDE.md. Everything a deck needs ships from here. |
+| `template.qmd` | Starter copied by `quarto use template`. Keep it minimal. |
+| `demo.qmd` | Shows every supported element; also the main deck for `make test`. |
+| `_quarto.yml` | Project metadata: the speaker's personal fields, shared by all decks in the folder. |
+| `tests/` | Layout checks in headless Chrome and two fixture decks. |
+| `.quartoignore` | Files `quarto use template` must not copy into a new deck. |
 
 ## Patterns
 
-- **SCSS variables** are defined once in `ubw-theme.scss` (`/*-- scss:defaults --*/`).
-  All partials imported in `/*-- scss:rules --*/` inherit those variables via `@import` (not `@use`).
-- **Metadata** flows: YAML frontmatter → `<meta>` tags (via `header-includes`) → JS in `header-footer.html` → DOM.
-- **Section dividers** use `# Title {data-background-color="#2A3D7A"}` syntax.
-- **End slide** uses `## {.end-slide data-background-color="..."}` with `.profile-photo` and `.steckbrief` divs populated by JS.
-- **URL hash** is managed entirely by `includes/sequential-hash.html` (not Revealjs). The YAML sets `hash: false` and `history: false` to prevent conflicts. Browser back/forward and deep-links to `#/N` work via a `popstate` listener and a `slideMap` lookup table built at `ready` time.
-- Generated build artifacts (`*.html`, `*.pdf`, `.quarto/`) are gitignored.
+- A deck sets `format: unibw-revealjs` and a few YAML keys. All Revealjs options, the institute defaults
+  and the option defaults live in `_extensions/unibw/_extension.yml`.
+- Anything repetitive belongs in the Lua filter (`ubw.lua`), not in the deck: divider colors, end slide,
+  references slide, source lines.
+- Every YAML field is optional. New fields must be read with `M.text()` / `M.flag()` from `ubw_meta.lua`,
+  which return `nil` for missing or empty values.
+- After any change to the extension run `make test`. When adding an element type, add a slide to
+  `demo.qmd`; when fixing a layout bug, add the failing case to `tests/fixture.qmd`.
 
 ## Gotchas
 
-- `header-footer.html` contains an inlined Base64 SVG for the UniBw signet — do not open in a text editor without line-wrap, it will appear huge.
-- `quarto render` requires Quarto CLI to be installed (`quarto.org`).
-- Slide PDFs come from Chrome via `?print-pdf`. `quarto render --to pdf` builds a LaTeX document, not slides.
 - Write `date:` in ISO form (`2026-04-01`). Quarto reads `01.04.2026` as month.day and shows 04.01.2026.
-- The CSL style is fetched from a Zotero URL at render time — needs internet access for first render.
-- `hash: false` + `history: false` in the YAML are intentional — removing them breaks sequential URL numbering because Revealjs's `writeURL()` overwrites the hash after every `slidechanged` event.
+- `hash: false` + `history: false` are intentional — `includes/sequential-hash.html` owns the URL.
+- Slide PDFs come from Chrome's print view (`?print-pdf`). `quarto render --to pdf` builds a LaTeX document.
+- About 2.9 MB of every HTML file are Source Sans fonts that Quarto's Revealjs base theme always embeds;
+  the template itself adds well under 1 MB.
+- Work on `develop`; never merge or push without an explicit instruction in the same message.

@@ -1,7 +1,9 @@
 # Quarto build artifacts
 /.quarto/
-/presentation-UniBw_files/
-/presentation-UniBw.html
+/*_files/
+/*.html
+/tests/*_files/
+/tests/*.html
 *.pdf
 !assets/*.pdf
 

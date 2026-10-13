@@ -10,8 +10,13 @@
   // The factor ends up in --ubw-fit, which scss/_layout.scss multiplies into
   // the slide's font size — text reflows, nothing is scaled by transform.
   var STEPS = [1, 0.93, 0.86, 0.8, 0.74, 0.68, 0.62, 0.56];
-  var CONTENT = 'section.slide:not(.title-slide):not(.end-slide):not(.no-fit)';
+  var CONTENT = 'section.slide:not(.title-slide):not(.end-slide):not(.no-fit), section#TOC';
   var OVERFLOW_LABEL = 'Inhalt passt nicht – Folie teilen oder kürzen';
+  try {
+    // Localized label from ubw.lua
+    var labels = JSON.parse(document.getElementById('ubw-config').textContent).labels;
+    if (labels && labels.overflow) OVERFLOW_LABEL = labels.overflow;
+  } catch (e) { /* keep the default */ }
 
   function overflows(slide) {
     return slide.scrollHeight > slide.clientHeight + 1 || slide.scrollWidth > slide.clientWidth + 1;

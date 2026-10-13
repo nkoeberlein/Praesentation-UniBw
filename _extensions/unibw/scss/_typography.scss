@@ -37,7 +37,8 @@
 // LISTS — staggered entrance & custom bullets
 // ============================================================
 
-.reveal ul {
+// Only lists inside slides, and not the tab bar of a `.panel-tabset`
+.reveal .slides ul:not(.panel-tabset-tabby) {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
@@ -124,8 +125,10 @@
 
 // A code block is never cut off or scrolled inside the slide: it grows, and
 // auto-fit shrinks the whole slide if it gets too tall.
-#{$ubw-content} pre code {
-  max-height: none;
+#{$ubw-content} {
+  pre code {
+    max-height: none;
+  }
 }
 
 // Highlighted lines. Each line is an inline-block span followed by a line

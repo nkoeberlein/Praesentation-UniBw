@@ -1,0 +1,132 @@
+---
+# Stress cases for auto-fit and layout. Checked by tests/check-slides.mjs via
+# `make test`; the slide ids below are referenced in the Makefile.
+title: "Prüfdeck"
+date: 2026-06-02
+format: unibw-revealjs
+---
+
+## Zu viele Punkte {#many-bullets}
+
+- Punkt 1 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 2 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 3 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 4 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 5 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 6 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 7 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 8 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 9 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 10 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 11 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 12 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 13 mit etwas längerem Text, damit die Zeile gefüllt ist
+- Punkt 14 mit etwas längerem Text, damit die Zeile gefüllt ist
+
+# Abschnitt A
+
+## Einzelbild {#single-image}
+
+![](../_extensions/unibw/assets/luftaufnahme-unibw-muenchen.jpg)
+
+## Bild mit Text {#image-with-text}
+
+Ein einleitender Satz über dem Bild.
+
+![Bildunterschrift](../_extensions/unibw/assets/luftaufnahme-unibw-muenchen.jpg)
+
+- Ein Punkt unter dem Bild
+
+## Langer Code {#long-code}
+
+```{.python}
+line_01 = compute(value, other=1)
+line_02 = compute(value, other=2)
+line_03 = compute(value, other=3)
+line_04 = compute(value, other=4)
+line_05 = compute(value, other=5)
+line_06 = compute(value, other=6)
+line_07 = compute(value, other=7)
+line_08 = compute(value, other=8)
+line_09 = compute(value, other=9)
+line_10 = compute(value, other=10)
+line_11 = compute(value, other=11)
+line_12 = compute(value, other=12)
+line_13 = compute(value, other=13)
+line_14 = compute(value, other=14)
+line_15 = compute(value, other=15)
+line_16 = compute(value, other=16)
+line_17 = compute(value, other=17)
+line_18 = compute(value, other=18)
+line_19 = compute(value, other=19)
+line_20 = compute(value, other=20)
+line_21 = compute(value, other=21)
+line_22 = compute(value, other=22)
+line_23 = compute(value, other=23)
+line_24 = compute(value, other=24)
+line_25 = compute(value, other=25)
+line_26 = compute(value, other=26)
+```
+
+# Abschnitt B
+
+## Spalten 30/70 {#columns-30-70}
+
+::: {.columns .plain}
+::: {.column width="30%"}
+![](../assets/Athene.png)
+:::
+::: {.column width="70%"}
+- Text neben dem Bild
+- Noch ein Punkt
+:::
+:::
+
+## Spalten 25/50/25 {#columns-25-50-25}
+
+::: {.columns}
+::: {.column width="25%"}
+Links
+:::
+::: {.column width="50%"}
+Mitte
+:::
+::: {.column width="25%"}
+Rechts
+:::
+:::
+
+## Hoffnungslos {#hopeless}
+
+| A | B | C |
+|---|---|---|
+| 1 | Wert | Bemerkung |
+| 2 | Wert | Bemerkung |
+| 3 | Wert | Bemerkung |
+| 4 | Wert | Bemerkung |
+| 5 | Wert | Bemerkung |
+| 6 | Wert | Bemerkung |
+| 7 | Wert | Bemerkung |
+| 8 | Wert | Bemerkung |
+| 9 | Wert | Bemerkung |
+| 10 | Wert | Bemerkung |
+| 11 | Wert | Bemerkung |
+| 12 | Wert | Bemerkung |
+| 13 | Wert | Bemerkung |
+| 14 | Wert | Bemerkung |
+| 15 | Wert | Bemerkung |
+| 16 | Wert | Bemerkung |
+| 17 | Wert | Bemerkung |
+| 18 | Wert | Bemerkung |
+| 19 | Wert | Bemerkung |
+| 20 | Wert | Bemerkung |
+| 21 | Wert | Bemerkung |
+| 22 | Wert | Bemerkung |
+| 23 | Wert | Bemerkung |
+| 24 | Wert | Bemerkung |
+| 25 | Wert | Bemerkung |
+| 26 | Wert | Bemerkung |
+| 27 | Wert | Bemerkung |
+| 28 | Wert | Bemerkung |
+| 29 | Wert | Bemerkung |
+| 30 | Wert | Bemerkung |

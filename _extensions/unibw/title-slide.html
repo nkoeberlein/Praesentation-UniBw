@@ -1,0 +1,25 @@
+<section id="title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$ class="quarto-title-block center">
+  <div class="title-content">
+$if(title)$
+    <h1 class="title">$title$</h1>
+$endif$
+$if(subtitle)$
+    <p class="subtitle">$subtitle$</p>
+$endif$
+$if(ubw-author-line)$
+    <p class="title-author">$ubw-author-line$</p>
+$endif$
+$if(cohort)$
+    <p class="title-cohort">$ubw-label-cohort$ $cohort$</p>
+$endif$
+$if(date)$
+    <p class="title-date">$date$</p>
+$endif$
+$if(ubw-course-line)$
+    <div class="title-course">$ubw-course-line$</div>
+$endif$
+$if(study-program)$
+    <p class="title-program">$study-program$</p>
+$endif$
+  </div>
+</section>

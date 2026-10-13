@@ -1,0 +1,32 @@
+---
+# A deck written for the template before it became an extension: explicit
+# divider color, hand-written end slide with an empty .steckbrief, English
+# labels, optional fields unset. Must render without a second end slide.
+title: "Legacy deck"
+author: "Jane Doe"
+date: 2026-12-24
+lang: en
+ubw-density: compact
+ubw-animations: false
+logo-left: false
+professor: ""
+format: unibw-revealjs
+---
+
+# First {data-background-color="#2A3D7A"}
+
+## Slide {source="Source: slide 3"}
+
+- one
+- two
+
+## {.end-slide data-background-color="#2A3D7A"}
+
+### Thanks {.end-title}
+
+:::: {.columns .end-columns}
+::: {.column width="70%"}
+::: {.steckbrief}
+:::
+:::
+::::
