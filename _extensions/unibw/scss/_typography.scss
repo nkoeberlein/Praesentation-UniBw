@@ -106,6 +106,9 @@
 // ============================================================
 
 .reveal pre {
+  // Revealjs sets `width: 100%`; without border-box the left border would
+  // make the block 4 px wider than the slide and count as overflow
+  box-sizing: border-box;
   border-left: 4px solid $ubw-orange;
   border-radius: 0 8px 8px 0;
   background: #f8f9fa;
